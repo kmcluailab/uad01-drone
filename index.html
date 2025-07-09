@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Scientech UAD-01 - Educational Drone Kit</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f5f7fa;
+      margin: 0;
+      color: #333;
+    }
+    header {
+      background-color: #283593;
+      color: white;
+      padding: 20px 20px 20px 100px;
+      text-align: center;
+      position: relative;
+      animation: slideInDown 1s ease;
+    }
+    header img.logo {
+      position: absolute;
+      top: 10px;
+      left: 20px;
+      height: 80px;
+    }
+    main {
+      max-width: 1200px;
+      margin: auto;
+      padding: 2em;
+      background-color: #fff;
+      animation: fadeIn 1.5s ease-in;
+    }
+    h2 {
+      color: #1a237e;
+      margin-top: 40px;
+    }
+    ul {
+      padding-left: 20px;
+    }
+    li {
+      margin-bottom: 10px;
+    }
+    .image-animated {
+      display: block;
+      max-width: 90%;
+      margin: 30px auto;
+      border-radius: 10px;
+      border: 4px solid #ddd;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      animation: fadeInImage 2s ease-in-out;
+    }
+    @keyframes fadeInImage {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes slideInDown {
+      from { transform: translateY(-100%); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="Khwaja_Moinuddin_Chishti_Language_University_logo.png" alt="University Logo" class="logo">
+    <h1>Scientech UAD-01 – Unassembled Drone Trainer Kit</h1>
+    <p>Khwaja Moinuddin Chishti Language University</p>
+  </header>
+  <main>
+    <video class="image-animated" controls poster="uad01_drone.png">
+      <source src="uad01_drone_demo.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+
+    <section>
+      <h2>Introduction</h2>
+      <p>The UAD-01 is an unassembled educational drone platform by Scientech. It enables students and professionals to learn drone mechanics, assembly, electronics, and autonomous programming hands-on.</p>
+    </section>
+
+    <section>
+      <h2>Key Features</h2>
+      <ul>
+        <li>Modular design for 25+ experiments</li>
+        <li>Compatible with Mission Planner for autonomous flight</li>
+        <li>Ideal for robotics, aeronautics, and embedded systems learners</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Hardware Components</h2>
+      <ul>
+        <li>Quadcopter frame, landing gear, BLDC motors</li>
+        <li>4 ESCs (40A), STM32 Flight Controller</li>
+        <li>GPS, LiDAR, FPV Camera + TX</li>
+        <li>6+ channel RC Transmitter/Receiver</li>
+        <li>3300mAh LiPo Battery</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Flight Control & Working</h2>
+      <ul>
+        <li><strong>Throttle:</strong> Vertical movement</li>
+        <li><strong>Pitch/Roll/Yaw:</strong> Directional tilt and rotation</li>
+        <li><strong>Lift, Thrust, Drag:</strong> Forces during flight</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Assembly & Safety</h2>
+      <ul>
+        <li>Secure motor wiring and propeller placement</li>
+        <li>Mount GPS, ESC, LiDAR properly</li>
+        <li>Test electronics before propeller attachment</li>
+        <li>Double-check battery and alignment</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Software & Setup</h2>
+      <ul>
+        <li>Use Mission Planner to flash firmware</li>
+        <li>Calibrate sensors: Accelerometer, Compass, ESC, RC</li>
+        <li>Configure flight modes: Stabilize, Loiter, RTL</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Advanced Features</h2>
+      <ul>
+        <li>LiDAR: Accurate altitude hold</li>
+        <li>FPV Camera: Real-time video via mobile app</li>
+        <li>Waypoint missions with GPS</li>
+        <li>PID tuning for flight behavior</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Applications & Learning</h2>
+      <ul>
+        <li>Aerial photography & monitoring</li>
+        <li>Research & environmental surveys</li>
+        <li>Embedded systems & control theory</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

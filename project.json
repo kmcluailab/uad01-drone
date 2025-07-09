@@ -1,0 +1,39 @@
+{
+  "project": {
+    "name": "Scientech UAD-01 – Drone Trainer Kit Webpage",
+    "description": "A single-page educational website explaining the Scientech UAD-01 unassembled drone kit, including its hardware, software, flight setup, and learning outcomes.",
+    "version": "1.0.0",
+    "author": {
+      "name": "Akash Gupta",
+      "github": "https://github.com/saysky2",
+      "linkedin": "https://www.linkedin.com/in/saysky2"
+    },
+    "contributors": [],
+    "files": [
+      "index.html",
+      "uad01_drone.mp4",
+      "Khwaja_Moinuddin_Chishti_Language_University_logo.png",
+      "README.md",
+      "project.json"
+    ],
+    "features": [
+      "Unassembled drone kit overview",
+      "Electronic components & assembly guide",
+      "Flight principles: throttle, yaw, roll, pitch",
+      "Mission Planner integration for firmware and GPS",
+      "Learning outcomes in aeronautics, robotics, and AI"
+    ],
+    "technologies": [
+      "HTML5",
+      "CSS3"
+    ],
+    "hosting": {
+      "recommended": [
+        "GitHub Pages",
+        "Netlify",
+        "Vercel"
+      ]
+    },
+    "license": "MIT"
+  }
+}
