@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,149 +7,436 @@
   <title>Scientech UAD-01 - Educational Drone Kit</title>
   <link rel="icon" type="image/png" href="Khwaja_Moinuddin_Chishti_Language_University_logo.png" />
   <style>
+    :root {
+      --bg-color: #f5f7fa;
+      --text-color: #333;
+      --header-bg: #283593;
+      --main-bg: #ffffff;
+      --border-color: #ddd;
+      --hover-bg: #f0f4ff;
+      --shadow: rgba(0, 0, 0, 0.1);
+    }
+
+    [data-theme="dark"] {
+      --bg-color: #1a1a1a;
+      --text-color: #e0e0e0;
+      --header-bg: #1e1e2e;
+      --main-bg: #2d2d2d;
+      --border-color: #444;
+      --hover-bg: #3a3a3a;
+      --shadow: rgba(255, 255, 255, 0.1);
+    }
+
     body {
       font-family: 'Segoe UI', sans-serif;
-      background-color: #f5f7fa;
+      background: var(--bg-color);
       margin: 0;
-      color: #333;
+      padding: 0;
+      color: var(--text-color);
+      transition: background-color 0.3s ease, color 0.3s ease;
     }
+
+    .controls {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .theme-toggle, .lang-select {
+      background: var(--main-bg);
+      color: var(--text-color);
+      border: 2px solid var(--border-color);
+      padding: 8px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .theme-toggle:hover, .lang-select:hover {
+      background: var(--hover-bg);
+    }
+
     header {
-      background-color: #283593;
+      background-color: var(--header-bg);
       color: white;
       padding: 20px 20px 20px 100px;
       text-align: center;
       position: relative;
       animation: slideInDown 1s ease;
     }
+
     header img.logo {
       position: absolute;
       top: 10px;
       left: 20px;
       height: 80px;
     }
+
     main {
       max-width: 1200px;
       margin: auto;
       padding: 2em;
-      background-color: #fff;
+      background-color: var(--main-bg);
       animation: fadeIn 1.5s ease-in;
+      border-radius: 10px;
+      margin-top: 20px;
+      box-shadow: 0 4px 10px var(--shadow);
     }
-    h2 {
-      color: #1a237e;
-      margin-top: 40px;
-    }
-    ul {
-      padding-left: 20px;
-    }
-    li {
-      margin-bottom: 10px;
-    }
+
     .image-animated {
       display: block;
       max-width: 90%;
       margin: 30px auto;
       border-radius: 10px;
-      border: 4px solid #ddd;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      border: 4px solid var(--border-color);
+      box-shadow: 0 4px 12px var(--shadow);
       animation: fadeInImage 2s ease-in-out;
     }
+
+    h2 {
+      color: #1a237e;
+      margin-top: 40px;
+    }
+
+    [data-theme="dark"] h2 {
+      color: #7986cb;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    li {
+      margin: 10px 0;
+      transition: background-color 0.3s ease;
+    }
+
+    li:hover {
+      background-color: var(--hover-bg);
+      padding-left: 5px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: var(--header-bg);
+      color: white;
+      margin-top: 40px;
+    }
+
+    footer a {
+      color: #7986cb;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    .lang-hidden {
+      display: none;
+    }
+
     @keyframes fadeInImage {
       from { opacity: 0; transform: scale(0.95); }
       to { opacity: 1; transform: scale(1); }
     }
+
     @keyframes fadeIn {
       from { opacity: 0; }
       to { opacity: 1; }
     }
+
     @keyframes slideInDown {
       from { transform: translateY(-100%); opacity: 0; }
       to { transform: translateY(0); opacity: 1; }
     }
   </style>
+  <script>
+    function toggleTheme() {
+      const html = document.documentElement;
+      const currentTheme = html.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+      
+      const button = document.querySelector('.theme-toggle');
+      button.textContent = newTheme === 'dark' ? '☀️ Light' : '🌙 Dark';
+    }
+
+    function changeLanguage(lang) {
+      // Hide all language elements
+      document.querySelectorAll('[data-lang]').forEach(el => {
+        el.classList.add('lang-hidden');
+      });
+      
+      // Show selected language elements
+      document.querySelectorAll(`[data-lang="${lang}"]`).forEach(el => {
+        el.classList.remove('lang-hidden');
+      });
+      
+      // Update document language
+      document.documentElement.lang = lang;
+      localStorage.setItem('language', lang);
+    }
+
+    // Initialize theme and language on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      const savedTheme = localStorage.getItem('theme') || 'light';
+      const savedLang = localStorage.getItem('language') || 'en';
+      
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      const themeButton = document.querySelector('.theme-toggle');
+      themeButton.textContent = savedTheme === 'dark' ? '☀️ Light' : '🌙 Dark';
+      
+      changeLanguage(savedLang);
+      document.querySelector('.lang-select').value = savedLang;
+    });
+  </script>
 </head>
 <body>
-  <header>
-    <img src="Khwaja_Moinuddin_Chishti_Language_University_logo.png" alt="University Logo" class="logo">
-    <h1>Scientech UAD-01 – Unassembled Drone Trainer Kit</h1>
-    <p>Khwaja Moinuddin Chishti Language University</p>
-  </header>
-  <main>
-    <video class="image-animated" autoplay loop muted playsinline poster="uad01_drone.png">
-      <source src="uad01_drone_demo.mp4" type="video/mp4">
-      Your browser does not support the video tag.
-    </video>
 
-    <section>
-      <h2>Introduction</h2>
-      <p>The UAD-01 is an unassembled educational drone platform by Scientech. It enables students and professionals to learn drone mechanics, assembly, electronics, and autonomous programming hands-on.</p>
-    </section>
+<div class="controls">
+  <button class="theme-toggle" onclick="toggleTheme()">🌙 Dark</button>
+  <select class="lang-select" onchange="changeLanguage(this.value)">
+    <option value="en">English</option>
+    <option value="hi">हिंदी</option>
+    <option value="ur">اردو</option>
+  </select>
+</div>
 
-    <section>
-      <h2>Key Features</h2>
-      <ul>
-        <li>Modular design for 25+ experiments</li>
-        <li>Compatible with Mission Planner for autonomous flight</li>
-        <li>Ideal for robotics, aeronautics, and embedded systems learners</li>
-      </ul>
-    </section>
+<header>
+  <p data-lang="en">Khwaja Moinuddin Chishti Language University</p>
+  <p data-lang="hi" class="lang-hidden">ख्वाजा मोइनुद्दीन चिश्ती भाषा विश्वविद्यालय</p>
+  <p data-lang="ur" class="lang-hidden">خواجہ معین الدین چشتی لینگویج یونیورسٹی</p>
+  <img src="Khwaja_Moinuddin_Chishti_Language_University_logo.png" alt="University Logo" class="logo">
+  <h1 data-lang="en">Scientech UAD-01 – Unassembled Drone Trainer Kit</h1>
+  <h1 data-lang="hi" class="lang-hidden">साइंटेक UAD-01 – अनअसेम्बल्ड ड्रोन ट्रेनर किट</h1>
+  <h1 data-lang="ur" class="lang-hidden">سائنٹیک UAD-01 – غیر منظم ڈرون ٹرینر کٹ</h1>
+</header>
 
-    <section>
-      <h2>Hardware Components</h2>
-      <ul>
-        <li>Quadcopter frame, landing gear, BLDC motors</li>
-        <li>4 ESCs (40A), STM32 Flight Controller</li>
-        <li>GPS, LiDAR, FPV Camera + TX</li>
-        <li>6+ channel RC Transmitter/Receiver</li>
-        <li>3300mAh LiPo Battery</li>
-      </ul>
-    </section>
+<main>
+  <video class="image-animated" autoplay loop muted playsinline poster="uad01_drone.png">
+    <source src="uad01_drone_demo.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
 
-    <section>
-      <h2>Flight Control & Working</h2>
-      <ul>
-        <li><strong>Throttle:</strong> Vertical movement</li>
-        <li><strong>Pitch/Roll/Yaw:</strong> Directional tilt and rotation</li>
-        <li><strong>Lift, Thrust, Drag:</strong> Forces during flight</li>
-      </ul>
-    </section>
+  <section>
+    <h2 data-lang="en">Introduction</h2>
+    <h2 data-lang="hi" class="lang-hidden">परिचय</h2>
+    <h2 data-lang="ur" class="lang-hidden">تعارف</h2>
+    
+    <p data-lang="en">The UAD-01 is an unassembled educational drone platform by Scientech. It enables students and professionals to learn drone mechanics, assembly, electronics, and autonomous programming hands-on.</p>
+    <p data-lang="hi" class="lang-hidden">UAD-01 साइंटेक द्वारा एक अनअसेम्बल्ड शैक्षणिक ड्रोन प्लेटफॉर्म है। यह छात्रों और पेशेवरों को ड्रोन यांत्रिकी, असेंबली, इलेक्ट्रॉनिक्स और स्वायत्त प्रोग्रामिंग सीखने में सक्षम बनाता है।</p>
+    <p data-lang="ur" class="lang-hidden">UAD-01 سائنٹیک کا ایک غیر منظم تعلیمی ڈرون پلیٹ فارم ہے۔ یہ طلباء اور پیشہ ور افراد کو ڈرون میکانکس، اسمبلی، الیکٹرونکس، اور خودکار پروگرامنگ سیکھنے میں مدد کرتا ہے۔</p>
+  </section>
 
-    <section>
-      <h2>Assembly & Safety</h2>
-      <ul>
-        <li>Secure motor wiring and propeller placement</li>
-        <li>Mount GPS, ESC, LiDAR properly</li>
-        <li>Test electronics before propeller attachment</li>
-        <li>Double-check battery and alignment</li>
-      </ul>
-    </section>
+  <section>
+    <h2 data-lang="en">Key Features</h2>
+    <h2 data-lang="hi" class="lang-hidden">मुख्य विशेषताएं</h2>
+    <h2 data-lang="ur" class="lang-hidden">اہم خصوصیات</h2>
+    
+    <ul data-lang="en">
+      <li>Modular design for 25+ experiments</li>
+      <li>Compatible with Mission Planner for autonomous flight</li>
+      <li>Ideal for robotics, aeronautics, and embedded systems learners</li>
+    </ul>
+    
+    <ul data-lang="hi" class="lang-hidden">
+      <li>25+ प्रयोगों के लिए मॉड्यूलर डिज़ाइन</li>
+      <li>स्वायत्त उड़ान के लिए मिशन प्लानर के साथ संगत</li>
+      <li>रोबोटिक्स, एरोनॉटिक्स और एम्बेडेड सिस्टम सीखने वालों के लिए आदर्श</li>
+    </ul>
+    
+    <ul data-lang="ur" class="lang-hidden">
+      <li>25+ تجربات کے لیے ماڈولر ڈیزائن</li>
+      <li>خودکار پرواز کے لیے مشن پلانر کے ساتھ مطابقت</li>
+      <li>روبوٹکس، ایروناٹکس، اور ایمبیڈڈ سسٹم سیکھنے والوں کے لیے مثالی</li>
+    </ul>
+  </section>
 
-    <section>
-      <h2>Software & Setup</h2>
-      <ul>
-        <li>Use Mission Planner to flash firmware</li>
-        <li>Calibrate sensors: Accelerometer, Compass, ESC, RC</li>
-        <li>Configure flight modes: Stabilize, Loiter, RTL</li>
-      </ul>
-    </section>
+  <section>
+    <h2 data-lang="en">Hardware Components</h2>
+    <h2 data-lang="hi" class="lang-hidden">हार्डवेयर घटक</h2>
+    <h2 data-lang="ur" class="lang-hidden">ہارڈ ویئر اجزاء</h2>
+    
+    <ul data-lang="en">
+      <li>Quadcopter frame, landing gear, BLDC motors</li>
+      <li>4 ESCs (40A), STM32 Flight Controller</li>
+      <li>GPS, LiDAR, FPV Camera + TX</li>
+      <li>6+ channel RC Transmitter/Receiver</li>
+      <li>3300mAh LiPo Battery</li>
+    </ul>
+    
+    <ul data-lang="hi" class="lang-hidden">
+      <li>क्वाडकॉप्टर फ्रेम, लैंडिंग गियर, BLDC मोटर्स</li>
+      <li>4 ESCs (40A), STM32 फ्लाइट कंट्रोलर</li>
+      <li>GPS, LiDAR, FPV कैमरा + TX</li>
+      <li>6+ चैनल RC ट्रांसमीटर/रिसीवर</li>
+      <li>3300mAh LiPo बैटरी</li>
+    </ul>
+    
+    <ul data-lang="ur" class="lang-hidden">
+      <li>کواڈ کاپٹر فریم، لینڈنگ گیئر، BLDC موٹرز</li>
+      <li>4 ESCs (40A)، STM32 فلائٹ کنٹرولر</li>
+      <li>GPS، LiDAR، FPV کیمرا + TX</li>
+      <li>6+ چینل RC ٹرانسمیٹر/ریسیور</li>
+      <li>3300mAh LiPo بیٹری</li>
+    </ul>
+  </section>
 
-    <section>
-      <h2>Advanced Features</h2>
-      <ul>
-        <li>LiDAR: Accurate altitude hold</li>
-        <li>FPV Camera: Real-time video via mobile app</li>
-        <li>Waypoint missions with GPS</li>
-        <li>PID tuning for flight behavior</li>
-      </ul>
-    </section>
+  <section>
+    <h2 data-lang="en">Flight Control & Working</h2>
+    <h2 data-lang="hi" class="lang-hidden">फ्लाइट कंट्रोल और कार्यप्रणाली</h2>
+    <h2 data-lang="ur" class="lang-hidden">فلائٹ کنٹرول اور کام</h2>
+    
+    <ul data-lang="en">
+      <li><strong>Throttle:</strong> Vertical movement</li>
+      <li><strong>Pitch/Roll/Yaw:</strong> Directional tilt and rotation</li>
+      <li><strong>Lift, Thrust, Drag:</strong> Forces during flight</li>
+    </ul>
+    
+    <ul data-lang="hi" class="lang-hidden">
+      <li><strong>थ्रॉटल:</strong> ऊर्ध्वाधर गति</li>
+      <li><strong>पिच/रोल/यॉ:</strong> दिशात्मक झुकाव और घूर्णन</li>
+      <li><strong>लिफ्ट, थ्रस्ट, ड्रैग:</strong> उड़ान के दौरान बल</li>
+    </ul>
+    
+    <ul data-lang="ur" class="lang-hidden">
+      <li><strong>تھروٹل:</strong> عمودی حرکت</li>
+      <li><strong>پچ/رول/یاو:</strong> سمتی جھکاؤ اور گردش</li>
+      <li><strong>لفٹ، تھرسٹ، ڈریگ:</strong> پرواز کے دوران قوتیں</li>
+    </ul>
+  </section>
 
-    <section>
-      <h2>Applications & Learning</h2>
-      <ul>
-        <li>Aerial photography & monitoring</li>
-        <li>Research & environmental surveys</li>
-        <li>Embedded systems & control theory</li>
-      </ul>
-    </section>
-  </main>
+  <section>
+    <h2 data-lang="en">Assembly & Safety</h2>
+    <h2 data-lang="hi" class="lang-hidden">असेंबली और सुरक्षा</h2>
+    <h2 data-lang="ur" class="lang-hidden">اسمبلی اور حفاظت</h2>
+    
+    <ul data-lang="en">
+      <li>Secure motor wiring and propeller placement</li>
+      <li>Mount GPS, ESC, LiDAR properly</li>
+      <li>Test electronics before propeller attachment</li>
+      <li>Double-check battery and alignment</li>
+    </ul>
+    
+    <ul data-lang="hi" class="lang-hidden">
+      <li>मोटर वायरिंग और प्रोपेलर प्लेसमेंट को सुरक्षित करें</li>
+      <li>GPS, ESC, LiDAR को ठीक से माउंट करें</li>
+      <li>प्रोपेलर लगाने से पहले इलेक्ट्रॉनिक्स का परीक्षण करें</li>
+      <li>बैटरी और संरेखण की दोबारा जांच करें</li>
+    </ul>
+    
+    <ul data-lang="ur" class="lang-hidden">
+      <li>موٹر وائرنگ اور پروپیلر پلیسمنٹ کو محفوظ کریں</li>
+      <li>GPS، ESC، LiDAR کو صحیح طریقے سے نصب کریں</li>
+      <li>پروپیلر لگانے سے پہلے الیکٹرونکس کا ٹیسٹ کریں</li>
+      <li>بیٹری اور الائنمنٹ کی دوبارہ جانچ کریں</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2 data-lang="en">Software & Setup</h2>
+    <h2 data-lang="hi" class="lang-hidden">सॉफ्टवेयर और सेटअप</h2>
+    <h2 data-lang="ur" class="lang-hidden">سافٹ ویئر اور سیٹ اپ</h2>
+    
+    <ul data-lang="en">
+      <li>Use Mission Planner to flash firmware</li>
+      <li>Calibrate sensors: Accelerometer, Compass, ESC, RC</li>
+      <li>Configure flight modes: Stabilize, Loiter, RTL</li>
+    </ul>
+    
+    <ul data-lang="hi" class="lang-hidden">
+      <li>फर्मवेयर फ्लैश करने के लिए मिशन प्लानर का उपयोग करें</li>
+      <li>सेंसर कैलिब्रेट करें: एक्सेलेरोमीटर, कंपास, ESC, RC</li>
+      <li>फ्लाइट मोड कॉन्फ़िगर करें: स्टेबिलाइज़, लॉइटर, RTL</li>
+    </ul>
+    
+    <ul data-lang="ur" class="lang-hidden">
+      <li>فرم ویئر فلیش کرنے کے لیے مشن پلانر استعمال کریں</li>
+      <li>سینسر کیلیبریٹ کریں: ایکسلرومیٹر، کمپاس، ESC، RC</li>
+      <li>فلائٹ موڈز کنفیگر کریں: اسٹیبلائز، لائٹر، RTL</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2 data-lang="en">Advanced Features</h2>
+    <h2 data-lang="hi" class="lang-hidden">उन्नत सुविधाएं</h2>
+    <h2 data-lang="ur" class="lang-hidden">ایڈوانس فیچرز</h2>
+    
+    <ul data-lang="en">
+      <li>LiDAR: Accurate altitude hold</li>
+      <li>FPV Camera: Real-time video via mobile app</li>
+      <li>Waypoint missions with GPS</li>
+      <li>PID tuning for flight behavior</li>
+    </ul>
+    
+    <ul data-lang="hi" class="lang-hidden">
+      <li>LiDAR: सटीक ऊंचाई नियंत्रण</li>
+      <li>FPV कैमरा: मोबाइल ऐप के माध्यम से रियल-टाइम वीडियो</li>
+      <li>GPS के साथ वेपॉइंट मिशन</li>
+      <li>फ्लाइट व्यवहार के लिए PID ट्यूनिंग</li>
+    </ul>
+    
+    <ul data-lang="ur" class="lang-hidden">
+      <li>LiDAR: درست اونچائی کنٹرول</li>
+      <li>FPV کیمرا: موبائل ایپ کے ذریعے ریئل ٹائم ویڈیو</li>
+      <li>GPS کے ساتھ وے پوائنٹ مشنز</li>
+      <li>فلائٹ بیہیویئر کے لیے PID ٹیوننگ</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2 data-lang="en">Applications & Learning</h2>
+    <h2 data-lang="hi" class="lang-hidden">अनुप्रयोग और सीखना</h2>
+    <h2 data-lang="ur" class="lang-hidden">ایپلیکیشنز اور تعلیم</h2>
+    
+    <ul data-lang="en">
+      <li>Aerial photography & monitoring</li>
+      <li>Research & environmental surveys</li>
+      <li>Embedded systems & control theory</li>
+    </ul>
+    
+    <ul data-lang="hi" class="lang-hidden">
+      <li>हवाई फोटोग्राफी और निगरानी</li>
+      <li>अनुसंधान और पर्यावरणीय सर्वेक्षण</li>
+      <li>एम्बेडेड सिस्टम और नियंत्रण सिद्धांत</li>
+    </ul>
+    
+    <ul data-lang="ur" class="lang-hidden">
+      <li>فضائی فوٹوگرافی اور نگرانی</li>
+      <li>تحقیق اور ماحولیاتی سروے</li>
+      <li>ایمبیڈڈ سسٹمز اور کنٹرول تھیوری</li>
+    </ul>
+  </section>
+</main>
+
+<footer>
+  <p data-lang="en">
+    Developer: Akash Gupta | 
+    <a href="https://www.linkedin.com/in/saysky2" target="_blank">LinkedIn</a> | 
+    <a href="https://github.com/saysky2" target="_blank">GitHub</a>
+  </p>
+  <p data-lang="en">Under the Supervision of <strong>Dr. Shan E Fatima</strong></p>
+  <p data-lang="hi" class="lang-hidden">
+    डेवलपर: आकाश गुप्ता | 
+    <a href="https://www.linkedin.com/in/saysky2" target="_blank">LinkedIn</a> | 
+    <a href="https://github.com/saysky2" target="_blank">GitHub</a>
+  </p>
+  <p data-lang="hi" class="lang-hidden"><strong>डॉ. शान ई. फातिमा</strong> के पर्यवेक्षण में</p>
+
+  <p data-lang="ur" class="lang-hidden">
+    ڈیولپر: آکاش گپتا | 
+    <a href="https://www.linkedin.com/in/saysky2" target="_blank">LinkedIn</a> | 
+    <a href="https://github.com/saysky2" target="_blank">GitHub</a>
+  </p>
+  <p data-lang="ur" class="lang-hidden"><strong>ڈاکٹر شان ای فاطمہ</strong> کی نگرانی میں</p>
+</footer>
+
 </body>
 </html>
